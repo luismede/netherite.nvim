@@ -1,3 +1,3 @@
-vim.api.nvim_create_user_command("NetheriteToggle", function()
-	require("plugin.netherite").toggle()
-end, { desc = "Open note window" })
+vim.api.nvim_create_user_command("NetheriteToggle", function(opts)
+	require("netherite").toggle(opts.args)
+end, { nargs = 1 })
