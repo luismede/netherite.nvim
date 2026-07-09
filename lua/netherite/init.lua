@@ -1,6 +1,7 @@
 local M = {}
 
 local EXTENSION = ".md"
+local group = vim.api.nvim_create_augroup("netherite_group", { clear = true })
 
 local function validate_filename(filename)
 	if not filename or filename == "" then
@@ -71,17 +72,24 @@ local function load_note(buf_id, filename)
 	end
 end
 
+local function delete_buf(buf_id)
+	if not buf_id or not vim.api.nvim_buf_is_valid(buf_id) then
+		return
+	end
+
+	vim.api.nvim_buf_delete(buf_id, { force = true })
+
+	M._buf_id = nil
+	M._win_id = nil
+end
+
 M._win_id = nil
 M._buf_id = nil
 
--- TODO: detect when a windows is closed by (:q, ZZ, etc) and clear buffer
 M.toggle = function(filename)
 	if M._win_id and vim.api.nvim_win_is_valid(M._win_id) then
 		vim.api.nvim_win_close(M._win_id, true)
-		vim.api.nvim_buf_delete(M._buf_id, { force = true })
-
-		M._buf_id = nil
-		M._win_id = nil
+		delete_buf(M._buf_id)
 	else
 		if not M._buf_id or not vim.api.nvim_buf_is_valid(M._buf_id) then
 			M._buf_id = create_buf(filename)
@@ -89,6 +97,14 @@ M.toggle = function(filename)
 
 		load_note(M._buf_id, filename)
 		M._win_id = create_win(M._buf_id)
+
+		vim.api.nvim_create_autocmd("WinClosed", {
+			group = group,
+			pattern = tostring(M._win_id),
+			callback = function()
+				delete_buf(M._buf_id)
+			end,
+		})
 	end
 end
 

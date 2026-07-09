@@ -25,7 +25,7 @@ jobs:
       - name: Run tests
         run: |
           nvim --headless --noplugin \
-            -c "luafile tests/stackmap_spec.lua" \
+            -c "luafile tests/netherite_spec.lua" \
             -c "qa!"
         continue-on-error: false
 
