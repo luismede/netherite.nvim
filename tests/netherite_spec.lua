@@ -1,0 +1,5 @@
+describe("netherite", function()
+	it("can be required", function()
+		assert.not_nil(require("netherite"))
+	end)
+end)
