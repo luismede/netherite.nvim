@@ -1,30 +1,18 @@
+local utils = require("netherite.utils")
+
 local M = {}
 
-local EXTENSION = ".md"
 local group = vim.api.nvim_create_augroup("netherite_group", { clear = true })
 
-local function validate_filename(filename)
-	if not filename or filename == "" then
-		return "filename cannot be empty"
-	end
-
-	return nil
-end
-
-local function get_note_path(filename, base_dir)
-	base_dir = base_dir or vim.fn.stdpath("data")
-	return vim.fs.joinpath(base_dir, filename .. EXTENSION)
-end
-
 local function create_buf(filename)
-	local err = validate_filename(filename)
+	local err = utils.validate_filename(filename)
 
 	if err then
 		vim.notify(err, vim.log.levels.ERROR)
 		return nil
 	end
 
-	local path = get_note_path(filename)
+	local path = utils.get_note_path(filename)
 
 	local buf = vim.api.nvim_create_buf(false, false)
 	vim.bo[buf].buftype = ""
@@ -56,14 +44,14 @@ local function create_win(buf_id)
 end
 
 local function load_note(buf_id, filename)
-	local err = validate_filename(filename)
+	local err = utils.validate_filename(filename)
 
 	if err then
 		vim.notify(err, vim.log.levels.ERROR)
 		return nil
 	end
 
-	local file_path = get_note_path(filename)
+	local file_path = utils.get_note_path(filename)
 
 	if vim.fn.filereadable(file_path) == 1 then
 		vim.api.nvim_buf_call(buf_id, function()
