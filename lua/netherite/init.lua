@@ -74,6 +74,8 @@ end
 M._win_id = nil
 M._buf_id = nil
 
+M._create_buf = create_buf
+
 M.toggle = function(filename)
 	if M._win_id and vim.api.nvim_win_is_valid(M._win_id) then
 		vim.api.nvim_win_close(M._win_id, true)

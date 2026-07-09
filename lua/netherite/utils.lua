@@ -1,6 +1,7 @@
 local M = {}
 
 local EXTENSION = ".md"
+local VALIDATE_FILENAME_ERR = "filename cannot be empty"
 
 ---@param filename string|nil
 ---@return string|nil
@@ -23,6 +24,6 @@ end
 M.validate_filename = validate_filename
 M.get_note_path = get_note_path
 
-M._validate_file_err = "filename cannot be empty"
+M._validate_file_err = VALIDATE_FILENAME_ERR
 
 return M
