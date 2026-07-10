@@ -28,17 +28,14 @@ jobs:
           nvim --version
           make test
 
-  stylua:
-    name: Check formatting
+  lint:
     runs-on: ubuntu-latest
+    name: lint
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install StyLua
-        uses: JohnnyMorganz/stylua-action@v4
+      - uses: JohnnyMorganz/stylua-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: latest
-
-      - name: Run StyLua check
-        run: stylua --check .
+          args: --check . -g '*.lua' -g '!deps/'
