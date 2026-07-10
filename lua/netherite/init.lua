@@ -5,6 +5,7 @@ local M = {}
 
 local group = vim.api.nvim_create_augroup("netherite_group", { clear = true })
 
+---@param filename string Filename of the note to open.
 local function create_buf(filename)
 	local err = utils.validate_filename(filename)
 
@@ -23,6 +24,8 @@ local function create_buf(filename)
 	return buf
 end
 
+---@param buf_id number Buffer ID of the note to open.
+---@returns number Window ID of the note window.
 local function create_win(buf_id)
 	local opts = {}
 
@@ -52,6 +55,8 @@ local function create_win(buf_id)
 	return win_id
 end
 
+---@param buf_id number Buffer ID of the note to open.
+---@param filename string Filename of the note to open.
 local function load_note(buf_id, filename)
 	local err = utils.validate_filename(filename)
 
@@ -69,6 +74,7 @@ local function load_note(buf_id, filename)
 	end
 end
 
+---@param buf_id number Buffer ID of the note to open.
 local function delete_buf(buf_id)
 	if not buf_id or not vim.api.nvim_buf_is_valid(buf_id) then
 		return
@@ -88,7 +94,9 @@ M._create_buf = create_buf
 
 M.setup = configs.setup
 
-M.toggle = function(filename)
+---@param filename string|nil
+---@returns number Window ID of the note window.
+function M.toggle(filename)
 	filename = filename or configs.config.default_filename
 
 	if M._win_id and vim.api.nvim_win_is_valid(M._win_id) then
