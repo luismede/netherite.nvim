@@ -3,9 +3,17 @@ vim.api.nvim_create_user_command("NetheriteToggle", function(opts)
 	require("netherite").toggle(filename)
 end, { nargs = "?" })
 
---TODO: accept only {"split" and "float"}
 vim.api.nvim_create_user_command("NetheriteMode", function(opts)
-	require("netherite.config").config.open_mode = opts.args
-end, { nargs = 1 })
+	require("netherite.config").mode(opts.args)
+end, { 
+	nargs = 1,
+	desc = "Set the open mode for Netherite",
+	complete =  function(arg_lead)
+		local modes = { "split", "float" }
+		return vim.tbl_filter(function(mode)
+			return vim.startswith(mode, arg_lead)
+		end, modes)
+	end
+})
 
 --TODO: create command to list recent notes
