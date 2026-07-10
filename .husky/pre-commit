@@ -1,0 +1,2 @@
+make test
+stylua lua/ plugin/ tests/  
