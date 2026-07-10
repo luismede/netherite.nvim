@@ -25,9 +25,5 @@ jobs:
       
       - name: Run tests (plenary)
         run: |
-          nvim --headless --noplugin \
-            -u NONE \
-            -c "set rtp+=$HOME/.local/share/nvim/site/pack/plenary/start/plenary.nvim" \
-            -c "set rtp+=." \
-            -c "lua require('plenary.test_harness').test_directory('tests/')" \
-            -c "qa!"
+          nvim --version
+          make test
