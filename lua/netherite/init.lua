@@ -1,4 +1,5 @@
 local utils = require("netherite.utils")
+local configs = require("netherite.config")
 
 local M = {}
 
@@ -12,7 +13,7 @@ local function create_buf(filename)
 		return nil
 	end
 
-	local path = utils.get_note_path(filename)
+	local path = utils.get_note_path(filename, configs.config.vault_path)
 
 	local buf = vim.api.nvim_create_buf(false, false)
 	vim.bo[buf].buftype = ""
@@ -24,20 +25,28 @@ end
 
 local function create_win(buf_id)
 	local opts = {}
-	local width = math.floor(vim.o.columns * 0.8)
-	local height = math.floor(vim.o.lines * 0.8)
 
-	local col = math.floor((vim.o.columns - width) / 2)
-	local row = math.floor((vim.o.lines - height) / 2)
+	if configs.config.open_mode == "split" then
+		opts = {
+			split = "right",
+			win = 0,
+		}
+	else
+		local width = math.floor(vim.o.columns * 0.8)
+		local height = math.floor(vim.o.lines * 0.8)
 
-	opts = {
-		relative = "editor",
-		width = width,
-		height = height,
-		col = col,
-		row = row,
-		border = "rounded",
-	}
+		local col = math.floor((vim.o.columns - width) / 2)
+		local row = math.floor((vim.o.lines - height) / 2)
+
+		opts = {
+			relative = "editor",
+			width = width,
+			height = height,
+			col = col,
+			row = row,
+			border = "rounded",
+		}
+	end
 
 	local win_id = vim.api.nvim_open_win(buf_id, true, opts)
 	return win_id
@@ -51,7 +60,7 @@ local function load_note(buf_id, filename)
 		return nil
 	end
 
-	local file_path = utils.get_note_path(filename)
+	local file_path = utils.get_note_path(filename, configs.config.vault_path)
 
 	if vim.fn.filereadable(file_path) == 1 then
 		vim.api.nvim_buf_call(buf_id, function()
@@ -73,10 +82,15 @@ end
 
 M._win_id = nil
 M._buf_id = nil
+M.config = {}
 
 M._create_buf = create_buf
 
+M.setup = configs.setup
+
 M.toggle = function(filename)
+	filename = filename or configs.config.default_filename
+
 	if M._win_id and vim.api.nvim_win_is_valid(M._win_id) then
 		vim.api.nvim_win_close(M._win_id, true)
 		delete_buf(M._buf_id)
