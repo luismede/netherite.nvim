@@ -1,0 +1,109 @@
+*netherite.txt*       Quick notes that sync with your Obsidian vault
+
+                     NETHERITE.NVIM
+                     A Neovim plugin for quick notes that sync with your
+                     Obsidian vault. Write fast, sync seamlessly.
+
+                     File reference: netherite.txt
+                     Author:         luismede 
+                     License:        MIT
+
+==============================================================================
+CONTENTS                                         *netherite-contents*
+
+    1. Introduction                      |netherite-introduction|
+    2. Requirements                      |netherite-requirements|
+    3. Installation                      |netherite-installation|
+    4. Configuration                     |netherite-configuration|
+    5. Commands                          |netherite-commands|
+
+==============================================================================
+1. INTRODUCTION                                  *netherite-introduction*
+
+netherite.nvim is a lightweight Neovim plugin for capturing quick notes from
+within Neovim that are stored as Markdown (`.md`) files, allowing them to be
+synced with an Obsidian vault.
+
+Notes are opened in either a centered floating window or a vertical split,
+making it easy to jot down ideas without leaving your workflow.
+
+==============================================================================
+2. REQUIREMENTS                                  *netherite-requirements*
+
+- Neovim >= 0.9.0 (uses `vim.fs`, `vim.api`, `vim.fn`)
+- An existing directory to act as the vault (defaults to Neovim's data path)
+- (Optional) Obsidian, if you want to sync and read notes there
+
+==============================================================================
+3. INSTALLATION                                  *netherite-installation*
+
+Using a plugin manager, for example lazy.nvim: >
+
+    {
+        "luismede/netherite.nvim",
+        config = function()
+            require("netherite").setup({
+                vault_path = "/path/to/obsidian/vault",
+            })
+        end,
+    }
+<
+
+See |netherite-configuration| for all available options.
+
+==============================================================================
+4. CONFIGURATION                                 *netherite-configuration*
+
+Configuration is applied through `require("netherite").setup(opts)`, defined
+in `lua/netherite/config.lua`.
+
+The following options may be set (all optional):
+
+                                                       *netherite-vault_path*
+`vault_path`            (string)  Directory where notes are stored and read
+                                  from. Defaults to `vim.fn.stdpath("data")`.
+
+                                                       *netherite-open_mode*
+`open_mode`             (string)  How the note window is opened. One of:
+                                    - "float"  centered floating window
+                                    - "split"  vertical split on the right
+                                  Defaults to "float".
+
+                                                  *netherite-default_filename*
+`default_filename`      (string)  Filename used when |NetheriteToggle| is
+                                  called without an argument. Defaults to
+                                  "scratch".
+
+Example: >
+
+    require("netherite").setup({
+        vault_path = "~/notes",
+        open_mode = "float",
+        default_filename = "scratch",
+    })
+<
+
+==============================================================================
+5. COMMANDS                                      *netherite-commands*
+
+                                                  *:NetheriteToggle*
+:NetheriteToggle [filename]     Open or close the netherite note window.
+
+                                Without an argument, the `default_filename`
+                                from config is used. When a filename is
+                                given, that note is opened (created if
+                                missing). The `.md` extension is added
+                                automatically.
+
+                                Re-running the command closes the window and
+                                discards the buffer.
+
+                                                    *:NetheriteMode*
+:NetheriteMode {mode}           Change how the note window is opened at
+                                runtime. {mode} should be "split" or
+                                "float".
+
+                                Note: this updates the live config value
+                                (`config.open_mode`) directly.
+
+ vim:tw=78:ts=8:ft=help:norl:
