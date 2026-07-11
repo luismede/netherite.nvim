@@ -32,4 +32,13 @@ function M.mode(open_mode)
     M.config.open_mode = open_mode
 end
 
+function M.change_vault(vault_path)
+    if not vault_path then
+        local cwd = vim.fn.getcwd()
+        M.config.vault_path = cwd
+    else
+        M.config.vault_path = vault_path
+    end
+end
+
 return M
