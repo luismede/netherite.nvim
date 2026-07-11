@@ -106,4 +106,15 @@ Example: >
                                 Note: this updates the live config value
                                 (`config.open_mode`) directly.
 
+                                                   *:NetheriteVault*
+:NetheriteVault [path]          Set the vault path at runtime.
+
+                                Without an argument, the current working
+                                directory is used as the vault path. When a
+                                path is given, notes are stored and read
+                                from that directory.
+
+                                Note: this updates the live config value
+                                (`config.vault_path`) directly.
+
  vim:tw=78:ts=8:ft=help:norl:

@@ -69,6 +69,7 @@ require("netherite").setup({
 | ----------------------------- | --------------------------------------------------------- |
 | `:NetheriteToggle [filename]` | Open or close the note window. Opens `default_filename` when no argument is given. The `.md` extension is added automatically. |
 | `:NetheriteMode {mode}`       | Change how the window opens at runtime: `"split"` or `"float"`. |
+| `:NetheriteVault [path]`      | Set the vault path at runtime. Without an argument, the current working directory is used. |
 
 The `.md` extension is added automatically. Re-running `:NetheriteToggle`
 closes the window and discards the buffer.
@@ -83,7 +84,7 @@ require("netherite").toggle(name)   -- open or close a note by filename
 Example keymap:
 
 ```lua
-vim.keymap.set("n", "<leader>n", function()
+vim.keymap.set("n", "<leader>tne", function()
     require("netherite").toggle("scratch")
 end, { desc = "Toggle netherite note" })
 ```
