@@ -21,8 +21,26 @@ local function get_note_path(filename, base_dir)
     return vim.fs.joinpath(base_dir, filename .. EXTENSION)
 end
 
+local function ensure_dir(dir)
+    if vim.fn.isdirectory(dir) == 0 then
+        vim.fn.mkdir(dir, "p")
+    end
+end
+
+---Computes the full note path and ensures its parent directory exists.
+---@param filename string
+---@param base_dir string|nil
+---@return string
+local function ensure_note_path(filename, base_dir)
+    local path = get_note_path(filename, base_dir)
+    ensure_dir(vim.fs.dirname(path))
+    return path
+end
+
 M.validate_filename = validate_filename
 M.get_note_path = get_note_path
+M.ensure_dir = ensure_dir
+M.ensure_note_path = ensure_note_path
 
 M._validate_file_err = VALIDATE_FILENAME_ERR
 

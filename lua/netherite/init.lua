@@ -14,7 +14,7 @@ local function create_buf(filename)
         return nil
     end
 
-    local path = utils.get_note_path(filename, configs.config.vault_path)
+    local path = utils.ensure_note_path(filename, configs.config.vault_path)
 
     local buf = vim.api.nvim_create_buf(false, false)
     vim.bo[buf].buftype = ""

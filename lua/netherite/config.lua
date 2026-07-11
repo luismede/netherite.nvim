@@ -19,6 +19,7 @@ function M.setup(opts)
     opts = opts or {}
 
     M.config = vim.tbl_deep_extend("force", default_config, opts)
+    M.config.vault_path = vim.fn.expand(M.config.vault_path)
 end
 
 ---@param open_mode "float" | "split"
