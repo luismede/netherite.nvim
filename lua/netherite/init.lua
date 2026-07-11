@@ -94,10 +94,14 @@ M._create_buf = create_buf
 
 M.setup = configs.setup
 
+--TODO: set on setup to accept user to choose format
+local filename_date = os.date("%Y-%m-%d")
+
 ---@param filename string|nil
 ---@returns number Window ID of the note window.
 function M.toggle(filename)
-    filename = filename or configs.config.default_filename
+    local default_filename = configs.config.default_filename .. filename_date
+    filename = filename or default_filename
 
     if M._win_id and vim.api.nvim_win_is_valid(M._win_id) then
         vim.api.nvim_win_close(M._win_id, true)
