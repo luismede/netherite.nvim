@@ -1,5 +1,6 @@
 :NetheriteMode	netherite.txt	/*:NetheriteMode*
 :NetheriteToggle	netherite.txt	/*:NetheriteToggle*
+:NetheriteVault	netherite.txt	/*:NetheriteVault*
 netherite-commands	netherite.txt	/*netherite-commands*
 netherite-configuration	netherite.txt	/*netherite-configuration*
 netherite-contents	netherite.txt	/*netherite-contents*
