@@ -37,7 +37,7 @@ function M.change_vault(vault_path)
         local cwd = vim.fn.getcwd()
         M.config.vault_path = cwd
     else
-        M.config.vault_path = vault_path
+        M.config.vault_path = vim.fn.expand(vault_path)
     end
 end
 

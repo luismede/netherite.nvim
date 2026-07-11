@@ -27,7 +27,6 @@ local function ensure_dir(dir)
     end
 end
 
----Computes the full note path and ensures its parent directory exists.
 ---@param filename string
 ---@param base_dir string|nil
 ---@return string
