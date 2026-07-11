@@ -151,3 +151,61 @@ describe("toggle (integration)", function()
         assert.is_false(vim.api.nvim_buf_is_valid(first_buf))
     end)
 end)
+
+describe("subdirectory notes (integration)", function()
+    local vault_dir
+    local saved_config
+
+    before_each(function()
+        vault_dir = vim.fn.tempname() .. "/netherite-vault-test"
+        saved_config = vim.deepcopy(require("netherite.config").config)
+        netherite.setup({ vault_path = vault_dir })
+    end)
+
+    after_each(function()
+        if netherite._buf_id then
+            cleanup_buf(netherite._buf_id)
+        end
+        if netherite._win_id and vim.api.nvim_win_is_valid(netherite._win_id) then
+            pcall(vim.api.nvim_win_close, netherite._win_id, true)
+        end
+        netherite._buf_id = nil
+        netherite._win_id = nil
+
+        require("netherite.config").config = saved_config
+        pcall(vim.fn.delete, vault_dir, "rf")
+    end)
+
+    it("creates missing subdirectory and buffer for nested note", function()
+        local filename = "cs/algorithms"
+        local buf_id = netherite._create_buf(filename)
+
+        assert.truthy(buf_id)
+        assert.is_true(vim.api.nvim_buf_is_valid(buf_id))
+
+        local expected_path = utils.get_note_path(filename, vault_dir)
+        assert.equal(expected_path, vim.api.nvim_buf_get_name(buf_id))
+
+        local expected_dir = vim.fs.dirname(expected_path)
+        assert.equal(1, vim.fn.isdirectory(expected_dir))
+
+        cleanup_buf(buf_id)
+    end)
+
+    it("toggles a note with a nested subdirectory path", function()
+        local filename = "notes/lang/lua"
+        netherite.toggle(filename)
+
+        assert.truthy(netherite._win_id)
+        assert.truthy(netherite._buf_id)
+        assert.is_true(vim.api.nvim_win_is_valid(netherite._win_id))
+        assert.is_true(vim.api.nvim_buf_is_valid(netherite._buf_id))
+
+        local expected_path = utils.get_note_path(filename, vault_dir)
+        assert.equal(expected_path, vim.api.nvim_buf_get_name(netherite._buf_id))
+
+        assert.equal(1, vim.fn.isdirectory(vim.fs.dirname(expected_path)))
+
+        netherite.toggle(filename)
+    end)
+end)
