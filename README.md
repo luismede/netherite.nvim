@@ -70,6 +70,7 @@ require("netherite").setup({
 | `:Netherite [filename]` | Open or close the note window. Opens `default_filename` when no argument is given. The `.md` extension is added automatically. |
 | `:NetheriteMode {mode}`       | Change how the window opens at runtime: `"split"` or `"float"`. |
 | `:NetheriteVault [path]`      | Set the vault path at runtime. Without an argument, the current working directory is used. |
+| `:NetheriteHistory`           | Browse recently opened notes via `vim.ui.select` and open a selected one. |
 
 The `.md` extension is added automatically. Re-running `:Netherite`
 closes the window and discards the buffer.
