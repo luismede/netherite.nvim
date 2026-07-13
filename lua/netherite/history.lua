@@ -1,6 +1,5 @@
 local M = {}
 
--- TODO: include timestamp in history entry
 ---@class NetheriteHistoryEntry
 ---@field filename string The name of the note file.
 ---@field path string The full path to the note file.
@@ -11,7 +10,7 @@ local MAX_ENTRIES = 50
 
 local function save(history)
     local encoded = vim.fn.json_encode(history)
-    vim.fn.writefile({encoded}, HISTORY_FILE)
+    vim.fn.writefile({ encoded }, HISTORY_FILE)
 end
 
 function M.load()
@@ -40,5 +39,7 @@ function M.push(entry)
 
     save(history)
 end
+
+M._history_file = HISTORY_FILE
 
 return M
