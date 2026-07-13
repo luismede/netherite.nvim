@@ -17,7 +17,7 @@ the project and the conventions to follow.
 1. Fork and clone the repository:
 
    ```sh
-   git clone https://github.com/<your-username>/netherite.nvim.git
+   git clone https://github.com/luismede/netherite.nvim.git
    cd netherite.nvim
    ```
 
