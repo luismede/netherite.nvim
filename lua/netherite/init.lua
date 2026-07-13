@@ -58,13 +58,6 @@ end
 ---@param buf_id number Buffer ID of the note to open.
 ---@param filename string Filename of the note to open.
 local function load_note(buf_id, filename)
-    local err = utils.validate_filename(filename)
-
-    if err then
-        vim.notify(err, vim.log.levels.ERROR)
-        return nil
-    end
-
     local file_path = utils.get_note_path(filename, configs.config.vault_path)
 
     if vim.fn.filereadable(file_path) == 1 then
