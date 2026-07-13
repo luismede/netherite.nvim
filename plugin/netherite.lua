@@ -24,4 +24,25 @@ end, {
     desc = "Set the vault path. If an empty argument is passed, the current path will be used",
 })
 
---TODO: create command to list recent notes
+vim.api.nvim_create_user_command("NetheriteHistory", function ()
+	local history = require("netherite.history")
+	local entries = history.load()
+
+	if #entries == 0 then
+		vim.notify("Netherite: no history yet!", vim.log.levels.INFO)
+		return
+	end
+
+	vim.ui.select(entries, {
+		prompt = "Netherite history",
+		format_item = function (entry)
+			return vim.fn.fnamemodify(entry.path, ":~:.")
+		end,
+	}, function (choice)
+		if choice then
+			require("netherite").toggle(choice.filename)
+		end
+	end)
+end, {
+	desc = "Open the history of notes"
+})

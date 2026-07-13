@@ -1,5 +1,6 @@
 local utils = require("netherite.utils")
 local configs = require("netherite.config")
+local history = require("netherite.history")
 
 local M = {}
 
@@ -58,13 +59,19 @@ end
 ---@param buf_id number Buffer ID of the note to open.
 ---@param filename string Filename of the note to open.
 local function load_note(buf_id, filename)
-    local file_path = utils.get_note_path(filename, configs.config.vault_path)
+	local file_path = utils.get_note_path(filename, configs.config.vault_path)
 
-    if vim.fn.filereadable(file_path) == 1 then
-        vim.api.nvim_buf_call(buf_id, function()
-            vim.cmd("edit " .. file_path)
-        end)
-    end
+	if vim.fn.filereadable(file_path) == 1 then
+		vim.api.nvim_buf_call(buf_id, function()
+			vim.cmd("edit " .. file_path)
+		end)
+		local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+		history.push({
+			filename = filename,
+			path = file_path,
+			timestamp = tostring(timestamp)
+		})
+	end
 end
 
 ---@param buf_id number Buffer ID of the note to open.
