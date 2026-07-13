@@ -70,7 +70,7 @@ The following options may be set (all optional):
                                   Defaults to "float".
 
                                                   *netherite-default_filename*
-`default_filename`      (string)  Filename used when |NetheriteToggle| is
+`default_filename`      (string)  Filename used when |Netherite| is
                                   called without an argument. Defaults to
                                   "scratch".
 
@@ -86,8 +86,8 @@ Example: >
 ==============================================================================
 5. COMMANDS                                      *netherite-commands*
 
-                                                  *:NetheriteToggle*
-:NetheriteToggle [filename]     Open or close the netherite note window.
+                                                  *:Netherite*
+:Netherite [filename]     Open or close the netherite note window.
 
                                 Without an argument, the `default_filename`
                                 from config is used. When a filename is

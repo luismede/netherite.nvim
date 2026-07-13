@@ -51,7 +51,7 @@ Call `setup` with any of the options below. All are optional.
 | ------------------ | ------- | ------------------------ | ----------------------------------------------------------------- |
 | `vault_path`       | string  | `vim.fn.stdpath("data")` | Directory where notes are stored and read from.                    |
 | `open_mode`        | string  | `"float"`                | How the note window opens. `"float"` (centered) or `"split"` (right). |
-| `default_filename` | string  | `"scratch"`              | File used when `:NetheriteToggle` is called without args.          |
+| `default_filename` | string  | `"scratch"`              | File used when `:Netherite` is called without args.          |
 
 Example:
 
@@ -67,11 +67,11 @@ require("netherite").setup({
 
 | Command                       | Description                                                |
 | ----------------------------- | --------------------------------------------------------- |
-| `:NetheriteToggle [filename]` | Open or close the note window. Opens `default_filename` when no argument is given. The `.md` extension is added automatically. |
+| `:Netherite [filename]` | Open or close the note window. Opens `default_filename` when no argument is given. The `.md` extension is added automatically. |
 | `:NetheriteMode {mode}`       | Change how the window opens at runtime: `"split"` or `"float"`. |
 | `:NetheriteVault [path]`      | Set the vault path at runtime. Without an argument, the current working directory is used. |
 
-The `.md` extension is added automatically. Re-running `:NetheriteToggle`
+The `.md` extension is added automatically. Re-running `:Netherite`
 closes the window and discards the buffer.
 
 ## Lua API
