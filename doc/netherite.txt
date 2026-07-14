@@ -69,17 +69,31 @@ The following options may be set (all optional):
                                     - "split"  vertical split on the right
                                   Defaults to "float".
 
-                                                  *netherite-default_filename*
-`default_filename`      (string)  Filename used when |Netherite| is
-                                  called without an argument. Defaults to
-                                  "scratch".
+                                                                                                *netherite-filename_config*
+`filename_config`       (table)   Configuration for generated note names.
+
+                                                                    Fields:
+                                                                        - `filename`  Base name used for new
+                                                                            notes. Defaults to "Untitled".
+                                                                        - `date`      Date format appended to the
+                                                                            filename. Defaults to "%Y-%m-%d".
+                                                                        - `time`      Time format appended to the
+                                                                            filename. Defaults to "%H:%M:%S".
+
+                                                                    `default_filename` are
+                                                                    deprecated and mapped to
+                                                                    `filename_config.filename`.
 
 Example: >
 
     require("netherite").setup({
         vault_path = "~/notes",
         open_mode = "float",
-        default_filename = "scratch",
+        filename_config = {
+            filename = "scratch",
+            date = "%Y-%m-%d",
+            time = "%H:%M:%S",
+        },
     })
 <
 
@@ -89,8 +103,9 @@ Example: >
                                                   *:Netherite*
 :Netherite [filename]     Open or close the netherite note window.
 
-                                Without an argument, the `default_filename`
-                                from config is used. When a filename is
+                                Without an argument, the
+                                `filename_config.filename` value from config
+                                is used. When a filename is
                                 given, that note is opened (created if
                                 missing). The `.md` extension is added
                                 automatically.

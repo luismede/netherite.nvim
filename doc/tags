@@ -4,7 +4,7 @@
 netherite-commands	netherite.txt	/*netherite-commands*
 netherite-configuration	netherite.txt	/*netherite-configuration*
 netherite-contents	netherite.txt	/*netherite-contents*
-netherite-default_filename	netherite.txt	/*netherite-default_filename*
+netherite-filename_config	netherite.txt	/*netherite-filename_config*
 netherite-installation	netherite.txt	/*netherite-installation*
 netherite-introduction	netherite.txt	/*netherite-introduction*
 netherite-open_mode	netherite.txt	/*netherite-open_mode*

@@ -47,11 +47,22 @@ under `~/.config/nvim/` (or `stdpath("config")`).
 
 Call `setup` with any of the options below. All are optional.
 
-| Option             | Type    | Default                  | Description                                                       |
-| ------------------ | ------- | ------------------------ | ----------------------------------------------------------------- |
-| `vault_path`       | string  | `vim.fn.stdpath("data")` | Directory where notes are stored and read from.                    |
-| `open_mode`        | string  | `"float"`                | How the note window opens. `"float"` (centered) or `"split"` (right). |
-| `default_filename` | string  | `"scratch"`              | File used when `:Netherite` is called without args.          |
+| Option            | Type    | Default                                  | Description                                                       |
+| ----------------- | ------- | ---------------------------------------- | ----------------------------------------------------------------- |
+| `vault_path`      | string  | `vim.fn.stdpath("data")`               | Directory where notes are stored and read from.                   |
+| `open_mode`       | string  | `"float"`                               | How the note window opens. `"float"` (centered) or `"split"` (right). |
+| `filename_config` | table   | `{ filename = "Untitled", date = "%Y-%m-%d", time = "%H:%M:%S" }` | Controls how note filenames are generated. |
+
+`filename_config` supports the following fields:
+
+| Field      | Type   | Default      | Description |
+| ---------- | ------ | ------------ | ----------- |
+| `filename` | string | `"Untitled"` | Base name used for new notes. |
+| `date`     | string | `"%Y-%m-%d"` | Date format appended to the filename. |
+| `time`     | string | `"%H:%M:%S"` | Time format appended to the filename. |
+
+> [!WARNING]
+> `default_filename` is deprecated and mapped to `filename_config.filename`.
 
 Example:
 
@@ -59,7 +70,11 @@ Example:
 require("netherite").setup({
     vault_path = "~/notes",
     open_mode = "float",
-    default_filename = "scratch",
+    filename_config = {
+        filename = "scratch",
+        date = "%Y-%m-%d",
+        time = "%H:%M:%S",
+    },
 })
 ```
 
@@ -67,7 +82,7 @@ require("netherite").setup({
 
 | Command                       | Description                                                |
 | ----------------------------- | --------------------------------------------------------- |
-| `:Netherite [filename]` | Open or close the note window. Opens `default_filename` when no argument is given. The `.md` extension is added automatically. |
+| `:Netherite [filename]` | Open or close the note window. Opens `filename_config.filename` when no argument is given. The `.md` extension is added automatically. |
 | `:NetheriteMode {mode}`       | Change how the window opens at runtime: `"split"` or `"float"`. |
 | `:NetheriteVault [path]`      | Set the vault path at runtime. Without an argument, the current working directory is used. |
 | `:NetheriteHistory`           | Browse recently opened notes via `vim.ui.select` and open a selected one. |
