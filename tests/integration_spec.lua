@@ -77,6 +77,13 @@ end)
 
 describe("toggle (integration)", function()
     before_each(function()
+        netherite.setup({
+            filename_config = {
+                date = "%Y-%m-%d",
+                time = "%H:%M:%S",
+            }
+        })
+        
         if netherite._win_id and vim.api.nvim_win_is_valid(netherite._win_id) then
             pcall(vim.api.nvim_win_close, netherite._win_id, true)
         end
@@ -159,7 +166,13 @@ describe("subdirectory notes (integration)", function()
     before_each(function()
         vault_dir = vim.fn.tempname() .. "/netherite-vault-test"
         saved_config = vim.deepcopy(require("netherite.config").config)
-        netherite.setup({ vault_path = vault_dir })
+        netherite.setup({
+                vault_path = vault_dir,
+                filename_config = {
+                    date = "%Y-%m-%d",
+                    time = "%H:%M:%S",
+            }
+        })
     end)
 
     after_each(function()
