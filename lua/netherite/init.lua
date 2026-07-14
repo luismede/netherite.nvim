@@ -84,34 +84,43 @@ local function delete_buf(buf_id)
 
     M._buf_id = nil
     M._win_id = nil
+    M._filename = nil
 end
 
 M._win_id = nil
 M._buf_id = nil
+M._filename = nil
+
 M.config = {}
 
 M._create_buf = create_buf
 
 M.setup = configs.setup
 
---TODO: set on setup to accept user to choose format
-local filename_date = os.date("%Y-%m-%d")
-
 ---@param filename string|nil
 ---@returns number Window ID of the note window.
 function M.toggle(filename)
-    local default_filename = configs.config.default_filename .. filename_date
-    filename = filename or default_filename
-
     if M._win_id and vim.api.nvim_win_is_valid(M._win_id) then
         vim.api.nvim_win_close(M._win_id, true)
         delete_buf(M._buf_id)
     else
+        local resolved_filename = utils.create_filename({
+            filename = filename or configs.config.filename_config.filename,
+            date = configs.config.filename_config.date,
+            time = configs.config.filename_config.time,
+        })
+
+        if not resolved_filename then
+            vim.notify("Filename cannot be empty", vim.log.levels.ERROR)
+            return
+        end
+        
+        M._filename = resolved_filename
         if not M._buf_id or not vim.api.nvim_buf_is_valid(M._buf_id) then
-            M._buf_id = create_buf(filename)
+            M._buf_id = create_buf(M._filename)
         end
 
-        load_note(M._buf_id, filename)
+        load_note(M._buf_id, M._filename)
         M._win_id = create_win(M._buf_id)
 
         vim.api.nvim_create_autocmd("WinClosed", {

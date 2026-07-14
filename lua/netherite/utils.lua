@@ -36,10 +36,26 @@ local function ensure_note_path(filename, base_dir)
     return path
 end
 
+---@param filename_config NetheriteFilenameConfig
+---@return string|nil Filename generated based on the provided filename configuration.
+local function create_filename(filename_config)
+    if not filename_config.filename then
+        return nil
+    end
+
+    local filename = filename_config.filename
+
+    local date = (not filename_config.date or #filename_config.date == 0) and "" or ("-" .. os.date(filename_config.date))
+    local time = (not filename_config.time or #filename_config.time == 0) and "" or ("-" .. os.date(filename_config.time))
+
+    return string.format("%s%s%s", filename, date, time)
+end
+
 M.validate_filename = validate_filename
 M.get_note_path = get_note_path
 M.ensure_dir = ensure_dir
 M.ensure_note_path = ensure_note_path
+M.create_filename = create_filename
 
 M._validate_file_err = VALIDATE_FILENAME_ERR
 
