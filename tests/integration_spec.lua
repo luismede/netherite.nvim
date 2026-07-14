@@ -79,8 +79,8 @@ describe("toggle (integration)", function()
     before_each(function()
         netherite.setup({
             filename_config = {
-                date = "%Y-%m-%d",
-                time = "%H:%M:%S",
+                date = "",
+                time = "",
             }
         })
         
@@ -169,8 +169,8 @@ describe("subdirectory notes (integration)", function()
         netherite.setup({
                 vault_path = vault_dir,
                 filename_config = {
-                    date = "%Y-%m-%d",
-                    time = "%H:%M:%S",
+                    date = "",
+                    time = "",
             }
         })
     end)
