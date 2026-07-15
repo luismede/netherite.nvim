@@ -25,10 +25,14 @@ local default_config = {
 }
 
 local function normalize_filename_config(opts)
-    local config = vim.tbl_deep_extend("force", default_config.filename_config, opts.filename_config or {})
+    local config =
+        vim.tbl_deep_extend("force", default_config.filename_config, opts.filename_config or {})
 
     if opts.default_filename ~= nil then
-        vim.notify("default_filename is deprecated; use filename_config.filename instead", vim.log.levels.WARN)
+        vim.notify(
+            "Netherite: default_filename is deprecated; use filename_config.filename instead",
+            vim.log.levels.WARN
+        )
 
         if opts.filename_config == nil or opts.filename_config.filename == nil then
             config.filename = opts.default_filename
